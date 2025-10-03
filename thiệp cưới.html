@@ -1,0 +1,1914 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đám Cưới — Hiệu Ứng Nâng Cao + Nhạc "Em Đồng Ý"</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#fff5fb;
+      --bg2:#f3edff;
+      --accent:#ff4f78;
+      --accent-2:#ff9ac9;
+      --accent-3:#ffd4e5;
+      --text:#5b2a3a;
+      --glass: rgba(255,255,255,0.92);
+      --reduced-motion-duration: 0ms;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    
+    /*  Added animated gradient background that shifts colors */
+    @keyframes bgShift {
+      0%, 100% { 
+        background:
+          radial-gradient(900px 400px at 15% 12%, rgba(255,180,220,0.22), transparent),
+          radial-gradient(700px 350px at 85% 88%, rgba(180,220,255,0.16), transparent),
+          radial-gradient(500px 300px at 50% 50%, rgba(255,200,240,0.08), transparent),
+          linear-gradient(180deg,var(--bg1),var(--bg2));
+      }
+      33% {
+        background:
+          radial-gradient(900px 400px at 25% 20%, rgba(255,200,240,0.24), transparent),
+          radial-gradient(700px 350px at 75% 80%, rgba(200,180,255,0.18), transparent),
+          radial-gradient(500px 300px at 60% 40%, rgba(255,180,220,0.10), transparent),
+          linear-gradient(180deg,#fff0f8,#f8edff);
+      }
+      66% {
+        background:
+          radial-gradient(900px 400px at 10% 18%, rgba(180,220,255,0.20), transparent),
+          radial-gradient(700px 350px at 90% 85%, rgba(255,180,220,0.18), transparent),
+          radial-gradient(500px 300px at 45% 55%, rgba(255,220,240,0.09), transparent),
+          linear-gradient(180deg,#fffafd,#f0edff);
+      }
+    }
+    
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:var(--text);
+      overflow:hidden;
+      animation: bgShift 20s ease-in-out infinite;
+      padding-bottom: 100px; /* Add padding to body to prevent content from being hidden behind footer */
+    }
+    
+    /*  Added floating orbs for ambient movement */
+    .floating-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(60px);
+      opacity: 0.4;
+      will-change: transform;
+    }
+    
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(120px, -80px) scale(1.1); }
+      66% { transform: translate(-80px, 100px) scale(0.9); }
+    }
+    
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-100px, 90px) scale(1.15); }
+      66% { transform: translate(110px, -70px) scale(0.85); }
+    }
+    
+    @keyframes orbFloat3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, -120px) scale(1.2); }
+    }
+
+    /*  Added twinkling stars background */
+    .star {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+      box-shadow: 0 0 4px rgba(255,255,255,0.8);
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    .stage {
+      width:100%; max-width:1200px;
+      display:flex; gap:28px; align-items:flex-end; justify-content:center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .tree-area{
+      position:relative;
+      width:460px; height:640px;
+      display:flex; align-items:flex-end; justify-content:center;
+      pointer-events:auto;
+      user-select:none;
+      /*  Added gentle floating animation to entire tree */
+      animation: treeFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes treeFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .trunk{
+      position:absolute; bottom:60px;
+      width:78px; height:260px;
+      background: 
+        linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.08) 48%, transparent 52%, rgba(255,255,255,0.06) 100%),
+        linear-gradient(180deg,#9d6b4a 0%,#7d4a2f 35%,#6d3f2a 65%,#5b2f1a 100%);
+      border-radius:40px;
+      box-shadow: 
+        0 20px 50px rgba(70,40,30,0.28),
+        inset -3px 0 12px rgba(0,0,0,0.25),
+        inset 3px 0 12px rgba(255,200,150,0.15),
+        inset 0 -8px 16px rgba(0,0,0,0.18);
+      z-index:2;
+      position: relative;
+      /*  Added subtle trunk sway */
+      animation: trunkSway 8s ease-in-out infinite;
+    }
+    
+    @keyframes trunkSway {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(0.5deg); }
+      75% { transform: rotate(-0.5deg); }
+    }
+    
+    .trunk::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 40px;
+      background: 
+        repeating-linear-gradient(180deg, 
+          transparent 0px, 
+          transparent 8px, 
+          rgba(0,0,0,0.04) 8px, 
+          rgba(0,0,0,0.04) 10px
+        );
+      opacity: 0.6;
+    }
+    .trunk::after {
+      content: '';
+      position: absolute;
+      left: 15%;
+      top: 10%;
+      width: 25%;
+      height: 70%;
+      border-radius: 40px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 60%);
+      filter: blur(8px);
+    }
+    .canopy{
+      position:absolute; bottom:230px; left:50%; transform:translateX(-50%);
+      width:460px; height:340px; z-index:1;
+      pointer-events:none;
+      background:
+        radial-gradient(200px 130px at 30% 40%, rgba(255,120,170,0.28), transparent),
+        radial-gradient(180px 140px at 70% 30%, rgba(255,160,200,0.24), transparent),
+        radial-gradient(220px 160px at 50% 65%, rgba(255,140,180,0.20), transparent),
+        radial-gradient(160px 100px at 25% 70%, rgba(180,230,255,0.14), transparent);
+      filter: blur(12px) saturate(160%);
+      /*  Enhanced canopy animation with hue rotation */
+      animation: canopyPulse 5s ease-in-out infinite, canopyHue 15s linear infinite;
+    }
+
+    @keyframes canopyPulse {
+      0%, 100% { 
+        opacity: 0.88; 
+        transform: translateX(-50%) scale(1); 
+        filter: blur(12px) saturate(160%);
+      }
+      50% { 
+        opacity: 1; 
+        transform: translateX(-50%) scale(1.05); 
+        filter: blur(14px) saturate(175%);
+      }
+    }
+    
+    @keyframes canopyHue {
+      0%, 100% { filter: blur(12px) saturate(160%) hue-rotate(0deg); }
+      50% { filter: blur(14px) saturate(175%) hue-rotate(15deg); }
+    }
+
+    .leaves { position:absolute; inset:0; z-index:6; pointer-events:auto }
+    .leaf {
+      position:absolute; width:38px; height:38px; transform-origin:center;
+      cursor:pointer; opacity:1; 
+      transition:transform .28s cubic-bezier(0.34, 1.56, 0.64, 1), filter .2s ease;
+      filter: drop-shadow(0 12px 24px rgba(220,90,150,0.22));
+      will-change:transform, top, left, opacity;
+      outline: none;
+      display:flex; align-items:center; justify-content:center;
+      /*  Enhanced leaf floating with breathing effect */
+      animation: leafFloat 3s ease-in-out infinite, leafBreathe 4s ease-in-out infinite;
+      animation-delay: calc(var(--leaf-index) * -0.3s);
+    }
+    
+    @keyframes leafFloat {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+      }
+      25% { 
+        transform: translateY(-4px) rotate(2deg) scale(1.02); 
+      }
+      75% { 
+        transform: translateY(4px) rotate(-2deg) scale(0.98); 
+      }
+    }
+    
+    @keyframes leafBreathe {
+      0%, 100% { filter: drop-shadow(0 12px 24px rgba(220,90,150,0.22)) brightness(1); }
+      50% { filter: drop-shadow(0 14px 28px rgba(220,90,150,0.28)) brightness(1.05); }
+    }
+    
+    .leaf:hover { 
+      transform: scale(1.25) rotate(12deg); 
+      filter: drop-shadow(0 16px 32px rgba(220,90,150,0.38)) brightness(1.15);
+      animation-play-state: paused;
+      z-index: 10;
+    }
+    .leaf:focus { 
+      box-shadow: 0 0 0 4px rgba(255,120,160,0.35); 
+      transform: scale(1.18) rotate(8deg); 
+      filter: drop-shadow(0 14px 28px rgba(220,90,150,0.32)) brightness(1.1);
+      animation-play-state: paused;
+    }
+    .leaf svg{display:block;width:100%;height:100%}
+
+    .panel {
+      width:560px; max-width:52%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,250,255,0.94));
+      border-radius:18px; padding:24px;
+      box-shadow: 
+        0 24px 64px rgba(150,70,110,0.14),
+        0 8px 24px rgba(150,70,110,0.08),
+        inset 0 1px 2px rgba(255,255,255,0.6);
+      color:var(--text);
+      min-height:300px; position:relative; z-index:4;
+      backdrop-filter: blur(12px) saturate(140%);
+      border:1px solid rgba(255,140,180,0.12);
+      /*  Added gentle floating animation to panel */
+      animation: panelFloat 7s ease-in-out infinite;
+      /* Move panel up slightly from bottom */
+      margin-bottom: 60px;
+    }
+    
+    @keyframes panelFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    
+    .panel h1 {
+      font-family:"Dancing Script",cursive; margin:0; font-size:38px; 
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 4px rgba(255,100,140,0.2));
+      /*  Added bouncing animation to title */
+      animation: titleBounce 3s ease-in-out infinite;
+      margin-top: -20px;
+    }
+    
+    @keyframes titleBounce {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+    
+    .panel p { margin:6px 0 12px; color:#7a3b5a }
+
+    .typing-area {
+      background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,248,253,0.88));
+      border-radius:14px; padding:18px; min-height:180px; 
+      border:1px solid rgba(230,190,210,0.12);
+      box-shadow: inset 0 2px 8px rgba(200,150,180,0.06);
+      font-family: "Fira Mono", ui-monospace, monospace;
+      font-size:16px; line-height:1.7; color:#402034; white-space:pre-wrap;
+      position:relative; overflow:auto;
+    }
+
+    .controls { display:flex; gap:12px; margin-top:14px; align-items:center; flex-wrap:wrap }
+    .btn {
+      padding:11px 18px; border-radius:999px; border:none; cursor:pointer;
+      background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%); 
+      color:white; font-weight:700; font-size:14px;
+      box-shadow:0 8px 20px rgba(255,80,130,0.24), 0 4px 12px rgba(255,80,130,0.16);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:0 12px 28px rgba(255,80,130,0.32), 0 6px 16px rgba(255,80,130,0.20);
+    }
+    .btn:hover::before {
+      left: 100%;
+    }
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .btn.secondary { 
+      background:transparent; 
+      color:var(--accent); 
+      border:2px solid rgba(255,90,140,0.20); 
+      box-shadow:0 4px 12px rgba(255,90,140,0.08);
+    }
+    .btn.secondary:hover {
+      background: rgba(255,90,140,0.08);
+      border-color: rgba(255,90,140,0.35);
+    }
+
+    .toggles { margin-left:auto; display:flex; gap:8px; align-items:center; color:#6b3346; font-size:13px }
+
+    canvas.confetti, canvas.mouseTrail, canvas.fireworks { position:fixed; inset:0; z-index:100; pointer-events:none }
+
+    /*  Added sparkle particles */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 150;
+      will-change: transform, opacity;
+    }
+    
+    @keyframes sparkleShine {
+      0%, 100% { 
+        transform: scale(0) rotate(0deg); 
+        opacity: 0; 
+      }
+      50% { 
+        transform: scale(1) rotate(180deg); 
+        opacity: 1; 
+      }
+    }
+
+    /*  Added ripple effect */
+    .ripple {
+      position: fixed;
+      border-radius: 50%;
+      border: 2px solid rgba(255,100,150,0.6);
+      pointer-events: none;
+      z-index: 120;
+      animation: rippleExpand 1s ease-out forwards;
+    }
+    
+    @keyframes rippleExpand {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+      100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+      }
+    }
+
+    .lantern {
+      position:fixed; width:32px; height:48px; z-index:30; pointer-events:none;
+      background: radial-gradient(circle at 50% 35%, #fffae5, #ffe8b8 50%, #ffd8a8 100%);
+      border-radius:8px; 
+      box-shadow: 
+        0 12px 28px rgba(255,180,100,0.18),
+        0 0 40px rgba(255,200,120,0.25),
+        inset 0 2px 6px rgba(255,255,255,0.4);
+      transform-origin:center;
+      opacity:0.96;
+      /*  Added flickering glow animation to lanterns */
+      animation: lanternGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes lanternGlow {
+      0%, 100% { 
+        box-shadow: 
+          0 12px 28px rgba(255,180,100,0.18),
+          0 0 40px rgba(255,200,120,0.25),
+          inset 0 2px 6px rgba(255,255,255,0.4);
+      }
+      50% { 
+        box-shadow: 
+          0 12px 28px rgba(255,180,100,0.28),
+          0 0 60px rgba(255,200,120,0.45),
+          inset 0 2px 6px rgba(255,255,255,0.6);
+      }
+    }
+
+    .music-controls { display:flex; gap:8px; align-items:center; margin-left:8px }
+    .music-controls button { 
+      padding:9px 14px; border-radius:999px; border:none; cursor:pointer; 
+      background:linear-gradient(135deg, #fff5fa, #fff0f6); 
+      color:var(--accent); font-weight:600;
+      box-shadow: 0 4px 12px rgba(255,100,140,0.12);
+      transition: all 0.2s;
+      /*  Added pulsing animation to music button */
+      animation: musicPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes musicPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .music-controls button:hover {
+      transform: translateY(-1px) scale(1.08);
+      box-shadow: 0 6px 16px rgba(255,100,140,0.18);
+      animation-play-state: paused;
+    }
+    .music-controls input[type="range"] { width:110px }
+
+    .message {
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(135deg, rgba(255,240,250,0.04), rgba(250,240,255,0.06));
+      backdrop-filter: blur(4px);
+      pointer-events:none; z-index:150; opacity:0; transition:opacity .4s ease;
+    }
+    .message.active { opacity:1; pointer-events:auto }
+    .card {
+      min-width:320px; max-width:820px; width:78%; padding:26px 30px; border-radius:20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,248,253,0.96));
+      box-shadow: 
+        0 24px 64px rgba(130,50,90,0.16),
+        0 12px 32px rgba(130,50,90,0.10),
+        inset 0 1px 2px rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,180,220,0.20);
+      text-align:center; transform:translateY(12px) scale(0.96); 
+      transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /*  Added shimmer effect to card */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255,255,255,0.3) 50%,
+        transparent 70%
+      );
+      animation: cardShimmer 6s ease-in-out infinite;
+    }
+    
+    @keyframes cardShimmer {
+      0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .message.active .card {
+      transform: translateY(0) scale(1);
+    }
+    .card.clickable { cursor: pointer; }
+
+    .small { font-size:13px; color:#7a3b5a }
+    .speed { display:flex; align-items:center; gap:8px; color:#6b3346 }
+
+    .petal {
+      position:fixed;
+      width:14px; height:18px;
+      background: radial-gradient(ellipse at 35% 25%, #fff, #ffe5f0 35%, #ffc8dc 70%, #ffb6d0 100%);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      transform-origin:center;
+      z-index:22;
+      pointer-events:none;
+      box-shadow: 0 8px 18px rgba(220,90,150,0.12);
+    }
+
+    .music-overlay {
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      pointer-events:auto;
+    }
+    .music-overlay button {
+      padding:20px 32px;
+      font-size:19px;
+      border-radius:16px;
+      background: linear-gradient(135deg,#ff6b95,#ff9ac9);
+      color:white; border:none; 
+      box-shadow:0 12px 36px rgba(0,0,0,0.24), 0 6px 18px rgba(255,100,150,0.30);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .music-overlay button:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow:0 16px 44px rgba(0,0,0,0.28), 0 8px 22px rgba(255,100,150,0.36);
+    }
+
+    .floating-heart {
+      position:fixed;
+      width:28px; height:28px;
+      z-index:200;
+      pointer-events:none;
+      transform-origin:center;
+      will-change:transform, opacity, left, top;
+      display:flex; align-items:center; justify-content:center;
+      filter: drop-shadow(0 10px 22px rgba(220,90,150,0.18));
+    }
+    .floating-heart svg { width:100%; height:100%; display:block; }
+
+    .slideshow-root { position:fixed; inset:0; z-index:1000; display:none; align-items:center; justify-content:center; background:black; }
+    .slideshow-root.active { display:flex; }
+    .slideshow { 
+      position:relative; width:100%; height:100vh; overflow:hidden; 
+      display:flex; align-items:center; justify-content:center;
+      /*  Added floating animation to photo frame */
+      animation: photoFloat 8s ease-in-out infinite;
+    }
+    
+    @keyframes photoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .slide { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .7s cubic-bezier(.2,.9,.2,1), transform .9s cubic-bezier(.2,.9,.2,1); transform: scale(1.05); }
+    .slide img { max-width:100%; max-height:100%; object-fit:cover; object-position:50% 50%; box-shadow:0 20px 70px rgba(0,0,0,0.7); will-change:transform,object-position; transform-origin:center center; transition:transform 12s linear, object-position 12s linear; border-radius:8px; }
+    .slide.active { opacity:1; z-index:2; transform: scale(1); }
+    
+    @keyframes kenburns {
+      0% { transform: scale(1.04) translateY(0px) translateX(0px); object-position: 38% 46%; }
+      100% { transform: scale(1.14) translateY(-12px) translateX(8px); object-position: 62% 54%; }
+    }
+    .slideshow.playing .slide.active img { animation: kenburns 12s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; animation-play-state: running; }
+    .slide img { animation-play-state: paused; }
+
+    .slideshow .back { position:absolute; top:12px; left:12px; padding:10px 14px; border-radius:10px; background:rgba(255,255,255,0.12); backdrop-filter: blur(8px); border:none; color:#fff; cursor:pointer; z-index:50; transition: all 0.2s; }
+    .slideshow .back:hover { background:rgba(255,255,255,0.20); transform: translateX(-2px); }
+    .slideshow .count { position:absolute; top:16px; right:16px; font-size:15px; color:#eee; z-index:50; background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 8px; backdrop-filter: blur(4px); }
+    .slideshow .nav-left { position:absolute; left:12px; top:50%; transform:translateY(-50%); z-index:50 }
+    .slideshow .nav-right { position:absolute; right:12px; top:50%; transform:translateY(-50%); z-index:50 }
+    .slideshow .controls { position:absolute; bottom:18px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:50 }
+    .slideshow button{ 
+      padding:11px 14px; border-radius:10px; border:none; 
+      background:rgba(255,255,255,0.12); backdrop-filter: blur(8px);
+      color:white; cursor:pointer; font-size: 15px;
+      transition: all 0.2s;
+    }
+    .slideshow button:hover {
+      background:rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+
+    .slideshow .progress-wrap { 
+      position:absolute; bottom:8px; left:10px; right:10px; height:6px; 
+      border-radius:6px; background: rgba(255,255,255,0.10); z-index:70; overflow:hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .slideshow .progress { 
+      height:100%; width:0%; 
+      background: linear-gradient(90deg,var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%); 
+      transition: width 0ms linear;
+      box-shadow: 0 0 12px rgba(255,100,150,0.6);
+    }
+
+    @media (max-width:980px){
+      .stage{flex-direction:column; align-items:center}
+      .panel{width:92%; max-width:92%}
+      .tree-area{width:360px;height:480px}
+      body { padding-bottom: 80px; } /* Adjust padding for smaller screens */
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root { --reduced-motion-duration: 0ms; }
+      * { transition-duration: 0ms !important; animation-duration: 0ms !important; animation-iteration-count: 1 !important; }
+      canvas.confetti, canvas.mouseTrail, canvas.fireworks { display:none; }
+      .lantern { display:none; }
+      .petal { display:none; }
+      .floating-heart { display:none; }
+      .slide img { animation: none !important; transform: none !important; object-position: 50% 50% !important; }
+      .canopy { animation: none !important; }
+      .floating-orb { display: none; }
+      .star { display: none; }
+      .sparkle { display: none; }
+      .ripple { display: none; }
+      #footer {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Elegant footer section */
+    #footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent, rgba(255,245,251,0.95) 20%, rgba(255,245,251,0.98));
+      backdrop-filter: blur(12px);
+      padding: 20px 24px 16px;
+      text-align: center;
+      z-index: 3;
+      border-top: 1px solid rgba(255,140,180,0.15);
+      box-shadow: 0 -8px 32px rgba(150,70,110,0.08);
+      font-family: 'Dancing Script', cursive;
+      color: var(--text);
+      animation: footerSlideUp 1s ease-out 2s both;
+    }
+
+    @keyframes footerSlideUp {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Hide footer on slideshow */
+    .slideshow-root.active ~ #footer {
+      display: none;
+    }
+
+    /* Responsive footer */
+    @media (max-width: 980px) {
+      #footer {
+        padding: 16px 20px 12px;
+      }
+      #footer p:first-child {
+        font-size: 16px;
+      }
+      #footer p:nth-child(2) {
+        font-size: 13px;
+      }
+    }
+    /* Style cho slide thank you */
+.thank-you-slide {
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(50,20,40,0.8)); /* Bg tối lãng mạn */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.thank-you-content {
+  max-width: 600px;
+  animation: fadeInThankYou 1s ease-out; /* Fade in mượt */
+  opacity: 0; /* Sẽ được set opacity:1 khi active */
+}
+
+@keyframes fadeInThankYou {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.thank-you-slide.active .thank-you-content {
+  opacity: 1;
+}
+
+/* Disable nav ở thank you */
+.thank-you-slide .nav-left,
+.thank-you-slide .nav-right,
+.thank-you-slide .controls {
+  opacity: 0.5;
+  pointer-events: none; /* Không click được Next/Play ở đây */
+}
+
+.thank-you-slide .back {
+  opacity: 1; /* Giữ nút back visible */
+}
+
+/* Responsive cho thank you */
+@media (max-width: 980px) {
+  .thank-you-content h2 { font-size: 36px; }
+  .thank-you-content p { font-size: 18px; }
+}
+  </style>
+</head>
+<body>
+  <!--  Added floating orbs for ambient background movement -->
+  <div class="floating-orb" style="width:300px;height:300px;background:rgba(255,180,220,0.3);top:10%;left:15%;animation:orbFloat1 25s ease-in-out infinite"></div>
+  <div class="floating-orb" style="width:250px;height:250px;background:rgba(180,220,255,0.25);bottom:15%;right:20%;animation:orbFloat2 30s ease-in-out infinite"></div>
+  <div class="floating-orb" style="width:200px;height:200px;background:rgba(255,200,240,0.2);top:50%;left:50%;animation:orbFloat3 20s ease-in-out infinite"></div>
+
+  <div class="stage" role="main" aria-label="Cây trái tim - Hiệu ứng nâng cao">
+    <div class="tree-area" id="treeArea" title="Nhấn vào cây để nhận lời chúc" aria-describedby="tree-instructions">
+      <div class="canopy" aria-hidden="true"></div>
+      <div class="trunk" aria-hidden="true"></div>
+      <div class="leaves" id="leaves"></div>
+    </div>
+
+    <div class="panel" aria-hidden="false">
+      <h1> Lời nhắn đến anh</h1>
+
+      <div class="typing-area" id="typingPreview" aria-live="polite"></div>
+
+      <div class="controls">
+        <button class="btn" id="startBtn">Bắt đầu </button>
+        <button class="btn secondary" id="replayBtn">Phát lại</button>
+
+        <div class="speed">
+          <label for="speedRange">Tốc độ</label>
+          <input id="speedRange" type="range" min="20" max="220" value="55" aria-label="Tốc độ đánh chữ"/>
+          <span id="speedLabel">55ms</span>
+        </div>
+
+        <div class="toggles">
+          <label class="small"><input type="checkbox" id="toggleMouse" checked/> Vệt chuột</label>
+          <label class="small"><input type="checkbox" id="toggleLantern" checked/> Đèn lồng</label>
+          <label class="small"><input type="checkbox" id="toggleHearts" checked/> Trái tim bay</label>
+        </div>
+
+        <div class="music-controls" title="Nhạc nền">
+          <button id="musicBtn" aria-pressed="false" aria-label="Phát hoặc tạm dừng nhạc">Phát nhạc</button>
+          <input id="musicVol" type="range" min="0" max="1" step="0.01" value="0.50" aria-label="Âm lượng nhạc" />
+          <label class="small"><input id="musicMute" type="checkbox" /> Tắt tiếng</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+  <canvas class="mouseTrail" id="mouseTrail" aria-hidden="true"></canvas>
+  <canvas class="fireworks" id="fireworks" aria-hidden="true"></canvas>
+
+  <div id="lanternsRoot" aria-hidden="true"></div>
+
+  <div class="message" id="message" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="card clickable" id="card" role="button" tabindex="0" aria-label="Bấm để nhận hiệu ứng trái tim">
+      <h2 style="font-family:'Dancing Script',cursive;font-size:38px;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:0">Chúc mừng đám cưới</h2>
+      <p style="margin:10px 0 16px;color:#6d3b53">Lời nhắn </p>
+      <div class="typing-area" id="messageTyping" style="min-height:120px; margin-bottom:14px" aria-live="polite"></div>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="btn" id="viewPhotosBtn">Xem ảnh cưới</button>
+        <button class="btn" id="closeBtn">Đóng</button>
+      </div>
+      <p id="autoRedirectMsg" style="margin-top:12px;color:#7a3b5a;font-size:13px;display:none">Trang ảnh sẽ mở sau <span id="redirectSeconds">10</span> giây... <button id="cancelRedirect" style="background:none;border:none;color:var(--accent);cursor:pointer;text-decoration:underline">Hủy</button></p>
+    </div>
+  </div>
+
+ <div class="slideshow-root" id="slideshowRoot" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="slideshow" id="slideshow">
+    <div class="slide active"><img loading="lazy" src="photo1.jpg" alt="Cặp đôi - 1"></div>
+    <div class="slide"><img loading="lazy" src="photo2.jpg" alt="Cặp đôi - 2"></div>
+    <div class="slide"><img loading="lazy" src="photo3.jpg" alt="Cặp đôi - 3"></div>
+    <div class="slide"><img loading="lazy" src="photo4.jpg" alt="Cặp đôi - 4"></div>
+    <div class="slide"><img loading="lazy" src="photo5.jpg" alt="Cặp đôi - 5"></div>
+    <div class="slide"><img loading="lazy" src="photo6.jpg" alt="Cặp đôi - 6"></div>
+    <div class="slide"><img loading="lazy" src="photo7.jpg" alt="Cặp đôi - 7"></div>
+    <div class="slide"><img loading="lazy" src="photo8.jpg" alt="Cặp đôi - 8"></div>
+    <div class="slide"><img loading="lazy" src="photo9.jpg" alt="Cặp đôi - 9"></div>
+    <div class="slide"><img loading="lazy" src="photo10.jpg" alt="Cặp đôi - 10"></div>
+    <div class="slide"><img loading="lazy" src="photo11.jpg" alt="Cặp đôi - 11"></div>
+    <div class="slide"><img loading="lazy" src="photo12.jpg" alt="Cặp đôi - 12"></div>
+    <div class="slide"><img loading="lazy" src="photo13.jpg" alt="Cặp đôi - 13"></div>
+    <div class="slide"><img loading="lazy" src="photo14.jpg" alt="Cặp đôi - 14"></div>
+    <div class="slide"><img loading="lazy" src="photo15.jpg" alt="Cặp đôi - 15"></div>
+       <!-- Thêm slide 5: Lời kết cảm ơn -->
+    <div class="slide thank-you-slide">
+      <div class="thank-you-content">
+        <h2 style="font-family:'Dancing Script',cursive; font-size:48px; margin:0 0 20px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Cảm ơn mọi người!</h2>
+        <p style="font-size:24px; margin:0 0 30px; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.3);">Đã đến chung vui trong ngày trọng đại của chúng con.<br>Chúc mọi người hạnh phúc và bình an mãi mãi! 💕</p>
+        <button class="btn-back-thankyou" id="thankYouBackBtn" style="padding:12px 24px; font-size:18px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:white; border:none; border-radius:12px; cursor:pointer; box-shadow:0 8px 20px rgba(255,80,130,0.3);">Quay lại</button>
+      </div>
+    </div>
+
+    <button class="back" id="slBackBtn">Quay lại</button>
+    <div class="count" id="slCount">1 / 5</div>
+
+    <div class="nav-left"><button id="slPrevBtn" aria-label="Ảnh trước">‹</button></div>
+    <div class="nav-right"><button id="slNextBtn" aria-label="Ảnh sau">›</button></div>
+
+    <div class="controls">
+      <button id="slPlayPauseBtn">Tạm dừng</button>
+      <button id="slFirstBtn">Đầu</button>
+      <button id="slLastBtn">Cuối</button>
+    </div>
+
+    <div class="progress-wrap" aria-hidden="true"><div class="progress" id="slProgress"></div></div>
+  </div>
+</div>
+
+  <!-- Elegant footer section -->
+  <footer id="footer" style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent, rgba(255,245,251,0.95) 20%, rgba(255,245,251,0.98));
+    backdrop-filter: blur(12px);
+    padding: 20px 24px 16px;
+    text-align: center;
+    z-index: 3;
+    border-top: 1px solid rgba(255,140,180,0.15);
+    box-shadow: 0 -8px 32px rgba(150,70,110,0.08);
+    font-family: 'Dancing Script', cursive;
+    color: var(--text);
+    animation: footerSlideUp 1s ease-out 2s both;
+  ">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <p style="
+        font-size: 18px;
+        margin: 0 0 8px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+      ">
+        💕 Tình yêu là hành trình, không phải đích đến-Sẽ có một ngày nào đó chúng ta đều có thể tìm thấy nửa kia của cuộc đời 💕
+      </p>
+      <p style="
+        font-size: 14px;
+        margin: 0;
+        color: #7a3b5a;
+        font-family: Inter, Arial, sans-serif;
+      ">
+        Cảm ơn mọi người đã đến và chia sẻ niềm vui cùng chúng con trong ngày trọng đại này
+      </p>
+      <div style="
+        margin-top: 12px;
+        font-size: 12px;
+        color: #9a5b7a;
+        font-family: Inter, Arial, sans-serif;
+      ">
+        <span style="opacity: 0.8;">Made with ❤️ for our special day</span>
+        <span style="margin: 0 8px; opacity: 0.5;">•</span>
+        <span style="opacity: 0.8;" id="currentYear"></span>
+      </div>
+    </div>
+  </footer>
+
+  <audio id="bgAudio" loop preload="auto">
+    <source src="em_dong_y.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="musicOverlayRoot" aria-hidden="true"></div>
+
+  <script>
+    const messages = [
+      "Anh yêu dấu!",
+      "Người anh yêu, từ hôm nay anh có thêm một cái tên mới – gọi em là vợ. Khoảnh khắc ấy với anh không chỉ là niềm hạnh phúc, mà còn là sự thiêng liêng, khi chúng ta chính thức bước sang một hành trình mới cùng nhau.",
+      "Em cầu mong cho tình yêu của chúng ta luôn bền chặt, đủ mạnh mẽ để vượt qua mọi sóng gió, và luôn dịu dàng để giữ gìn sự ấm áp trong từng khoảnh khắc đời thường. Em mong gia đình nhỏ của mình sẽ mãi ngập tràn tiếng cười, tình yêu thương và sự thấu hiểu.",
+      "Em hứa sẽ cùng anh dựng xây một tổ ấm trọn vẹn, sẽ là người bạn đồng hành sát cánh cùng anh trên mọi chặng đường, dù gian nan hay hạnh phúc. Em sẽ là hậu phương vững chắc để anh yên lòng theo đuổi ước mơ, là người bạn tri kỷ để sẻ chia mọi buồn vui, và là người vợ thủy chung, yêu anh suốt đời.",
+      "Hôm nay, trước sự chứng kiến của gia đình, bạn bè và cả Tạo Hóa, em muốn anh biết rằng: từ nay đến mai sau, trái tim em chỉ có một nguyện ước duy nhất – đó là được yêu anh, sống bên anh và đi cùng anh đến hết cuộc đời này.",
+  ]
+    const $ = id => document.getElementById(id);
+    function random(min,max){ return Math.random()*(max-min)+min }
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    //  Added twinkling stars to background
+    function createStars(count = 50) {
+      if(prefersReducedMotion) return;
+      for(let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = random(0, 100) + '%';
+        star.style.top = random(0, 100) + '%';
+        star.style.animation = `twinkle ${random(2, 5)}s ease-in-out infinite`;
+        star.style.animationDelay = random(0, 3) + 's';
+        document.body.appendChild(star);
+      }
+    }
+    createStars(50);
+
+    //  Added sparkle effect on interactions
+    function createSparkle(x, y) {
+      if(prefersReducedMotion) return;
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = x + 'px';
+      sparkle.style.top = y + 'px';
+      sparkle.style.width = '20px';
+      sparkle.style.height = '20px';
+      
+      const color = `hsl(${random(320, 360)}deg 90% 70%)`;
+      sparkle.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <path d="M10 0 L11 9 L20 10 L11 11 L10 20 L9 11 L0 10 L9 9 Z" fill="${color}" />
+        </svg>
+      `;
+      
+      document.body.appendChild(sparkle);
+      sparkle.style.animation = 'sparkleShine 0.8s ease-out forwards';
+      
+      setTimeout(() => sparkle.remove(), 800);
+    }
+
+    //  Added ripple effect on clicks
+    function createRipple(x, y) {
+      if(prefersReducedMotion) return;
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.left = (x - 100) + 'px';
+      ripple.style.top = (y - 100) + 'px';
+      document.body.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 1000);
+    }
+
+    //  Enhanced confetti with stars and triangles
+    class Confetti { 
+      constructor(x,y){ 
+        this.x=x; 
+        this.y=y; 
+        this.size=random(7,16); 
+        const hue = Math.random() < 0.7 ? random(320,360) : random(40,60);
+        this.color=`hsl(${hue}deg ${Math.floor(random(75,98))}% ${Math.floor(random(58,75))}%)`;
+        this.rotation=random(0,Math.PI*2); 
+        this.vx=random(-4,4); 
+        this.vy=random(1.5,5); 
+        this.spin=random(-0.22,0.22); 
+        this.opacity=1;
+        const rand = Math.random();
+        if(rand < 0.4) this.shape = 'rect';
+        else if(rand < 0.7) this.shape = 'circle';
+        else if(rand < 0.85) this.shape = 'star';
+        else this.shape = 'triangle';
+      } 
+      update(){ 
+        this.x+=this.vx; 
+        this.y+=this.vy; 
+        this.rotation+=this.spin; 
+        this.vy+=0.04; 
+        this.vx *= 0.995;
+        this.opacity-=0.008; 
+      } 
+      draw(ctx){ 
+        ctx.save(); 
+        ctx.globalAlpha=Math.max(0,this.opacity); 
+        ctx.translate(this.x,this.y); 
+        ctx.rotate(this.rotation); 
+        ctx.fillStyle=this.color;
+        
+        if(this.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size/2, 0, Math.PI*2);
+          ctx.fill();
+        } else if(this.shape === 'star') {
+          ctx.beginPath();
+          for(let i = 0; i < 5; i++) {
+            const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+            const x = Math.cos(angle) * this.size/2;
+            const y = Math.sin(angle) * this.size/2;
+            if(i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else if(this.shape === 'triangle') {
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size/2);
+          ctx.lineTo(this.size/2, this.size/2);
+          ctx.lineTo(-this.size/2, this.size/2);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.fillRect(-this.size/2,-this.size/2,this.size,this.size*0.65);
+        }
+        ctx.restore(); 
+      } 
+    }
+
+    const bgAudio = $('bgAudio');
+    const musicBtn = $('musicBtn');
+    const musicVol = $('musicVol');
+    const musicMute = $('musicMute');
+    const musicOverlayRoot = $('musicOverlayRoot');
+    bgAudio.volume = Number(musicVol.value || 0.5);
+
+    async function fadeAudioTo(targetVol = 1, duration = 700){
+      const start = performance.now();
+      const from = bgAudio.volume;
+      return new Promise(res => {
+        function step(now){
+          const t = Math.min(1, (now - start) / duration);
+          bgAudio.volume = from + (targetVol - from) * t;
+          if(t < 1) requestAnimationFrame(step);
+          else res();
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    async function tryPlayMusic(){
+      if(!bgAudio.src) return false;
+      try {
+        const target = Number(musicVol.value);
+        bgAudio.volume = 0;
+        await bgAudio.play();
+        await fadeAudioTo(target, 700);
+        musicBtn.textContent = 'Tạm dừng nhạc';
+        musicBtn.setAttribute('aria-pressed','true');
+        return true;
+      } catch(err){
+        console.warn('tryPlayMusic failed/rejected:', err);
+        return false;
+      }
+    }
+
+    async function pauseMusic(){
+      if(bgAudio.paused) return;
+      const from = bgAudio.volume;
+      const dur = prefersReducedMotion ? 0 : 600;
+      const start = performance.now();
+      await new Promise(res => {
+        function step(now){
+          const t = Math.min(1, (now - start) / dur);
+          bgAudio.volume = from * (1 - t);
+          if(t < 1) requestAnimationFrame(step);
+          else res();
+        }
+        requestAnimationFrame(step);
+      });
+      bgAudio.pause();
+      bgAudio.volume = Number(musicVol.value);
+      musicBtn.textContent = 'Phát nhạc';
+      musicBtn.setAttribute('aria-pressed','false');
+    }
+
+    musicBtn.addEventListener('click', async () => {
+      if(bgAudio.paused){
+        const ok = await tryPlayMusic();
+        if(!ok) showMusicOverlay('Bấm để bật nhạc');
+      } else {
+        await pauseMusic();
+      }
+    });
+    musicVol.addEventListener('input', () => { bgAudio.volume = Number(musicVol.value); });
+    musicMute.addEventListener('change', () => { bgAudio.muted = musicMute.checked; });
+
+    let musicOverlayEl = null;
+    function showMusicOverlay(text='Bấm để bật nhạc'){
+      if(musicOverlayEl) return;
+      musicOverlayRoot.setAttribute('aria-hidden','false');
+      musicOverlayEl = document.createElement('div');
+      musicOverlayEl.className = 'music-overlay';
+      musicOverlayEl.innerHTML = `<button id="__music_play_overlay">${text}</button>`;
+      musicOverlayRoot.appendChild(musicOverlayEl);
+      const btn = document.getElementById('__music_play_overlay');
+      btn.addEventListener('click', async () => {
+        try {
+          await bgAudio.play();
+          musicBtn.textContent = 'Tạm dừng nhạc';
+          musicBtn.setAttribute('aria-pressed','true');
+          removeMusicOverlay();
+        } catch(err){
+          alert('Trình duyệt vẫn chặn phát nhạc. Kiểm tra file hoặc bấm nút Phát nhạc.');
+        }
+      }, {once:true});
+    }
+    function removeMusicOverlay(){ if(!musicOverlayEl) return; musicOverlayEl.remove(); musicOverlayEl=null; musicOverlayRoot.setAttribute('aria-hidden','true'); }
+
+    async function ensureMusicPlayOnUserGesture(){
+      if(bgAudio.src && bgAudio.paused){
+        const ok = await tryPlayMusic();
+        if(!ok) showMusicOverlay('Bấm để bật nhạc');
+      }
+    }
+
+    const confettiCanvas = $('confetti');
+    const cfCtx = confettiCanvas.getContext('2d');
+    const trailCanvas = $('mouseTrail');
+    const trCtx = trailCanvas.getContext('2d');
+    const fxCanvas = $('fireworks');
+    const fxCtx = fxCanvas.getContext('2d');
+
+    let resizeTimeout = null;
+    function resizeCanvas(c, ctx){
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      c.style.width = w + 'px';
+      c.style.height = h + 'px';
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    function onResizeDebounced(){
+      if(resizeTimeout) clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(()=>{
+        resizeCanvas(confettiCanvas, cfCtx);
+        resizeCanvas(trailCanvas, trCtx);
+        resizeCanvas(fxCanvas, fxCtx);
+      }, 120);
+    }
+    addEventListener('resize', onResizeDebounced);
+    onResizeDebounced();
+
+    let confettiPieces = [];
+    function runConfettiBurst(x,y,amount=80){ 
+      if(prefersReducedMotion) return; 
+      for(let i=0;i<amount;i++) confettiPieces.push(new Confetti(x+random(-50,50),y+random(-15,15))); 
+    }
+    function confettiLoop(){ 
+      cfCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); 
+      for(let i=confettiPieces.length-1;i>=0;i--){ 
+        const p=confettiPieces[i]; 
+        p.update(); 
+        p.draw(cfCtx); 
+        if(p.opacity<=0) confettiPieces.splice(i,1); 
+      } 
+      requestAnimationFrame(confettiLoop); 
+    }
+    if(!prefersReducedMotion) confettiLoop();
+
+    let trailParticles = []; 
+    const MAX_TRAIL = 150;
+    class Trail { 
+      constructor(x,y,color){ 
+        this.x=x; 
+        this.y=y; 
+        this.vx=random(-0.8,0.8); 
+        this.vy=random(-1.2,-2.8); 
+        this.life=random(600,1400); 
+        this.age=0; 
+        this.size=random(5,12); 
+        this.color=color; 
+        this.rotation=random(0,360); 
+      } 
+      update(dt){ 
+        this.x += this.vx*(dt*0.06); 
+        this.y += this.vy*(dt*0.06); 
+        this.vy += 0.02;
+        this.age += dt; 
+      } 
+      draw(ctx){ 
+        const t=Math.max(0,1-this.age/this.life); 
+        ctx.save(); 
+        ctx.globalAlpha=t*0.9; 
+        ctx.translate(this.x,this.y); 
+        ctx.rotate(this.rotation*Math.PI/180); 
+        ctx.fillStyle=this.color; 
+        ctx.beginPath(); 
+        ctx.ellipse(0,0,this.size*t,this.size*0.65*t,0,0,Math.PI*2); 
+        ctx.fill(); 
+        ctx.restore(); 
+      } 
+    }
+    let lastTrailTime = performance.now();
+    function trailLoop(now=performance.now()){ 
+      const dt = now - lastTrailTime; 
+      lastTrailTime = now; 
+      trCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height); 
+      for(let i=trailParticles.length-1;i>=0;i--){ 
+        const p=trailParticles[i]; 
+        p.update(dt); 
+        p.draw(trCtx); 
+        if(p.age>p.life) trailParticles.splice(i,1); 
+      } 
+      requestAnimationFrame(trailLoop); 
+    }
+    if(!prefersReducedMotion) trailLoop();
+    
+    let lastMouse = {x:-9999,y:-9999};
+    const toggleMouseEl = $('toggleMouse');
+    window.addEventListener('mousemove', (e)=>{ 
+      if(prefersReducedMotion) return; 
+      if(!toggleMouseEl.checked) return; 
+      const dx=e.clientX-lastMouse.x, dy=e.clientY-lastMouse.y; 
+      const dist=Math.hypot(dx,dy); 
+      const hue = Math.random() < 0.8 ? random(320,360) : random(280,320);
+      const color=`hsl(${hue}deg 88% ${random(62,75)}%)`; 
+      const n=Math.min(8, Math.max(1, Math.floor(dist/10))); 
+      for(let i=0;i<n;i++) trailParticles.push(new Trail(e.clientX+random(-8,8), e.clientY+random(-8,8), color)); 
+      while(trailParticles.length>MAX_TRAIL) trailParticles.shift(); 
+      
+      //  Added sparkles on mouse movement
+      if(Math.random() < 0.15) {
+        createSparkle(e.clientX + random(-20, 20), e.clientY + random(-20, 20));
+      }
+      
+      lastMouse.x=e.clientX; 
+      lastMouse.y=e.clientY; 
+    }, {passive:true});
+
+    //  Added ripple effect on clicks
+    window.addEventListener('click', (e) => {
+      createRipple(e.clientX, e.clientY);
+      createSparkle(e.clientX, e.clientY);
+    });
+
+    let fireworks = [];
+    class FireParticle { 
+      constructor(x,y,angle,color){ 
+        this.x=x; 
+        this.y=y; 
+        const speed=random(2,7); 
+        this.vx=Math.cos(angle)*speed; 
+        this.vy=Math.sin(angle)*speed; 
+        this.life=random(850,1600); 
+        this.age=0; 
+        this.size=random(3,6.5); 
+        this.color=color; 
+      } 
+      update(dt){ 
+        this.vy += 0.05*(dt/16); 
+        this.x += this.vx*(dt/16); 
+        this.y += this.vy*(dt/16); 
+        this.age += dt; 
+      } 
+      draw(ctx){ 
+        const t=Math.max(0,1-this.age/this.life); 
+        ctx.globalAlpha=t*0.95; 
+        ctx.fillStyle=this.color; 
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.color;
+        ctx.beginPath(); 
+        ctx.arc(this.x,this.y,this.size*t,0,Math.PI*2); 
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      } 
+    }
+    function spawnFirework(x,y,colors=undefined,amount=40){ 
+      if(prefersReducedMotion) return; 
+      const hueBase=random(320,360); 
+      for(let i=0;i<amount;i++){ 
+        const angle=random(0,Math.PI*2); 
+        const color = colors ? colors[i%colors.length] : `hsl(${hueBase + random(-25,25)} 90% ${random(55,75)}%)`; 
+        fireworks.push(new FireParticle(x,y,angle,color)); 
+      } 
+    }
+    function fireworksLoop(now=performance.now()){ 
+      const dt = 16; 
+      fxCtx.clearRect(0,0,fxCanvas.width,fxCanvas.height); 
+      for(let i=fireworks.length-1;i>=0;i--){ 
+        const p=fireworks[i]; 
+        p.update(dt); 
+        p.draw(fxCtx); 
+        if(p.age>p.life) fireworks.splice(i,1); 
+      } 
+      requestAnimationFrame(fireworksLoop); 
+    }
+    if(!prefersReducedMotion) fireworksLoop();
+
+    const lanternsRoot = $('lanternsRoot'); 
+    const toggleLanternEl = $('toggleLantern');
+    function spawnLantern(){ 
+      if(prefersReducedMotion) return; 
+      if(!toggleLanternEl.checked) return; 
+      const el=document.createElement('div'); 
+      el.className='lantern'; 
+      const startLeft=random(10,90); 
+      el.style.left=startLeft+'vw'; 
+      el.style.top=(100+random(5,18))+'vh'; 
+      el.style.opacity=0; 
+      el.style.transform=`translateY(0) scale(${random(.9,1.2)})`; 
+      lanternsRoot.appendChild(el); 
+      const dur=random(8000,15000); 
+      el.animate([
+        {transform:`translateY(0) scale(${random(.9,1.1)})`, opacity:0},
+        {transform:`translateY(-125vh) scale(${random(.75,1.15)})`, opacity:0.98}
+      ], {duration:dur, easing:'cubic-bezier(.15,.85,.15,1)', fill:'forwards'}); 
+      setTimeout(()=>el.remove(), dur+200); 
+    }
+    let lanternInterval = null; 
+    if(!prefersReducedMotion) lanternInterval = setInterval(()=>{ if(toggleLanternEl.checked) spawnLantern(); }, 3800);
+
+    function spawnPetal(count=10){ 
+      if(prefersReducedMotion) return; 
+      for(let i=0;i<count;i++){ 
+        const d=document.createElement('div'); 
+        d.className='petal'; 
+        const startX=random(5,95); 
+        d.style.left = startX+'vw'; 
+        d.style.top = (random(-10,-3))+'vh'; 
+        d.style.opacity=random(.7,1); 
+        const dur=random(5000,10000); 
+        document.body.appendChild(d); 
+        requestAnimationFrame(()=>{ 
+          d.style.transition=`top ${dur}ms linear, left ${dur}ms ease-in-out, transform ${dur}ms ease-in-out`; 
+          d.style.top=(110+random(8,35))+'vh'; 
+          d.style.left=(startX+random(-18,18))+'vw'; 
+          //  Added spinning rotation to falling petals
+          d.style.transform=`rotate(${random(360,1080)}deg) scale(${random(0.8,1.2)})`; 
+        }); 
+        setTimeout(()=>d.remove(), dur+200); 
+      } 
+    }
+    let petalInterval = null; 
+    if(!prefersReducedMotion) petalInterval = setInterval(()=> spawnPetal(2), 1000);
+
+    const toggleHeartsEl = $('toggleHearts');
+    function spawnFloatingHeart(startX = null, startY = null, opts = {}) {
+      if(prefersReducedMotion) return;
+      if(toggleHeartsEl && !toggleHeartsEl.checked) return;
+      const el = document.createElement('div');
+      el.className = 'floating-heart';
+      const uid = Math.floor(Math.random()*1000000);
+      const c1 = `hsl(${random(330,360)}deg 85% 75%)`;
+      const c2 = `hsl(${random(320,350)}deg 80% 65%)`;
+      el.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="g${uid}" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="${c1}"/>
+              <stop offset="100%" stop-color="${c2}"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 21s-7-4.35-9-7.04C0.25 13.78 4.02 8 8.5 10.5 10.55 11.85 12 15 12 15s1.45-3.15 3.5-4.5C19.98 8 24.25 13.78 21.11 17.96 19 20.65 12 21 12 21z" fill="url(#g${uid})"/>
+        </svg>
+      `;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const sx = startX == null ? (vw * random(0.35,0.65)) : startX;
+      const sy = startY == null ? (vh * random(0.70,0.90)) : startY;
+      el.style.left = sx + 'px';
+      el.style.top = sy + 'px';
+      el.style.transform = `translate(-50%,-50%) scale(${(opts.scale||random(0.85,1.35))}) rotate(${random(-25,25)}deg)`;
+      document.body.appendChild(el);
+
+      const dx = random(-100,100);
+      const dy = - (vh * random(0.30,0.70));
+      const rot = random(-420,420);
+      const dur = opts.duration || Math.round(random(3500,8000));
+      const easing = 'cubic-bezier(.15,.9,.15,1)';
+
+      const anim = el.animate([
+        { transform: el.style.transform, opacity: 1 },
+        { transform: `translate(${dx}px, ${dy}px) scale(${(opts.endScale||random(0.5,0.9))}) rotate(${rot}deg)`, opacity: 0.01 }
+      ], { duration: dur, easing, fill: 'forwards' });
+
+      const sway = el.animate([
+        { transform: 'translateX(0px)' },
+        { transform: `translateX(${random(-15,15)}px)` },
+        { transform: 'translateX(0px)' }
+      ], { duration: Math.round(random(1000,2000)), iterations: Math.ceil(dur / 1200), easing: 'ease-in-out' });
+
+      anim.onfinish = () => {
+        sway.cancel();
+        el.remove();
+      };
+    }
+
+    function spawnFloatingHearts(n = 8, area = null) {
+      if(prefersReducedMotion) return;
+      for(let i=0;i<n;i++){
+        setTimeout(() => {
+          if(area && area.cx != null && area.cy != null) {
+            const sx = area.cx + random(-90,90);
+            const sy = area.cy + random(-70,70);
+            spawnFloatingHeart(sx, sy, { scale: random(0.95,1.35) });
+          } else {
+            spawnFloatingHeart();
+          }
+        }, i * Math.round(random(50,140)));
+      }
+    }
+
+    const leavesContainer = $('leaves');
+    const treeArea = $('treeArea');
+
+    function createLeaves(n = 46){
+      leavesContainer.innerHTML = '';
+      const w = treeArea.clientWidth, h = treeArea.clientHeight;
+      for(let i=0;i<n;i++){
+        const el = document.createElement('button');
+        el.className = 'leaf';
+        el.setAttribute('aria-label', 'Lá trái tim, nhấn để rơi');
+        el.setAttribute('title', 'Lá trái tim — nhấn để rơi');
+        el.style.position = 'absolute';
+        const clusterX = Math.random() < 0.5 ? random(0.15, 0.45) : random(0.55, 0.85);
+        const clusterY = random(0.08, 0.72);
+        const rx = (clusterX + random(-0.08, 0.08)) * w;
+        const ry = (clusterY + random(-0.06, 0.06)) * h;
+        el.style.left = rx + 'px';
+        el.style.top = ry + 'px';
+        el.style.transform = `rotate(${random(-45,45)}deg) scale(${random(.92,1.18)})`;
+        const leafHue = random(330, 360);
+        const leafSat = random(80, 95);
+        const leafLight = random(60, 72);
+        const leafHue2 = leafHue + random(-15, 15);
+        const gradientId = `leafGrad${i}`;
+        el.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:hsl(${leafHue}deg ${leafSat}% ${leafLight}%);stop-opacity:1" />
+              <stop offset="100%" style="stop-color:hsl(${leafHue2}deg ${leafSat-5}% ${leafLight-8}%);stop-opacity:1" />
+            </linearGradient>
+            <filter id="leafGlow${i}">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path d="M12 21s-7-4.35-9-7.04C0.25 13.78 4.02 8 8.5 10.5 10.55 11.85 12 15 12 15s1.45-3.15 3.5-4.5C19.98 8 24.25 13.78 21.11 17.96 19 20.65 12 21 12 21z" 
+                fill="url(#${gradientId})" 
+                filter="url(#leafGlow${i})"
+                style="paint-order: stroke fill;" />
+        </svg>`;
+        el.style.setProperty('--leaf-index', i);
+        el.addEventListener('click', (e)=> { e.stopPropagation(); makeLeafFall(el); });
+        el.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); makeLeafFall(el); }});
+        leavesContainer.appendChild(el);
+      }
+    }
+
+    function makeLeafFall(el){
+      if(!el) return;
+      const rect = el.getBoundingClientRect();
+      const startX = rect.left + rect.width/2;
+      const startY = rect.top + rect.height/2;
+      const endX = startX + random(-220,220);
+      const endY = innerHeight + 120;
+      const clone = el.cloneNode(true);
+      clone.style.position = 'fixed'; 
+      clone.style.left = (startX)+'px'; 
+      clone.style.top = (startY)+'px';
+      clone.style.margin = 0; 
+      clone.style.zIndex = 120;
+      clone.style.animation = 'none';
+      document.body.appendChild(clone);
+      el.remove();
+      const rotEnd = random(180,1080) * (Math.random()>0.5?1:-1);
+      const duration = Math.round(random(1800,3200));
+      if(!prefersReducedMotion){
+        clone.animate([
+          { 
+            transform: clone.style.transform, 
+            opacity:1,
+            filter: 'drop-shadow(0 12px 24px rgba(220,90,150,0.22))'
+          },
+          { 
+            transform: `translate(${(endX-startX)*0.3}px, ${(endY-startY)*0.4}px) rotate(${rotEnd*0.4}deg) scale(${random(.85,0.95)})`, 
+            opacity:0.9,
+            offset: 0.4,
+            filter: 'drop-shadow(0 10px 20px rgba(220,90,150,0.18))'
+          },
+          { 
+            transform: `translate(${endX-startX}px, ${endY-startY}px) rotate(${rotEnd}deg) scale(${random(.4,0.7)})`, 
+            opacity:0.01,
+            filter: 'drop-shadow(0 5px 10px rgba(220,90,150,0.08))'
+          }
+        ], { duration, easing:'cubic-bezier(.25,.46,.45,.94)', fill:'forwards' });
+      } else {
+        clone.style.opacity = '0';
+      }
+      setTimeout(()=> clone.remove(), duration + 200);
+      createMiniHearts(startX,startY,16);
+      runConfettiBurst(startX,startY,24);
+      spawnFirework(startX - 40, startY - 40, undefined, 40);
+      spawnFloatingHearts(12, { cx: startX, cy: startY });
+      //  Added sparkles when leaf falls
+      for(let i = 0; i < 8; i++) {
+        setTimeout(() => createSparkle(startX + random(-40, 40), startY + random(-40, 40)), i * 80);
+      }
+      ensureMusicPlayOnUserGesture();
+    }
+
+    function createMiniHearts(cx, cy, n=12){
+      if(prefersReducedMotion) return;
+      const container = document.createElement('div');
+      container.style.position = 'fixed'; 
+      container.style.left='0'; 
+      container.style.top='0';
+      container.style.width='100%'; 
+      container.style.height='100%'; 
+      container.style.pointerEvents='none';
+      container.style.zIndex = 125;
+      document.body.appendChild(container);
+      for(let i=0;i<n;i++){
+        const el = document.createElement('div');
+        el.style.position='absolute';
+        const heartColor = `hsl(${random(330,360)}deg 85% 68%)`;
+        el.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9-7.04C0.25 13.78 4.02 8 8.5 10.5 10.55 11.85 12 15 12 15s1.45-3.15 3.5-4.5C19.98 8 24.25 13.78 21.11 17.96 19 20.65 12 21 12 21z" fill="${heartColor}"/></svg>`;
+        el.style.left = (cx + random(-12,12)) + 'px';
+        el.style.top = (cy + random(-12,12)) + 'px';
+        el.style.opacity = 0.98;
+        container.appendChild(el);
+        const dx = random(-180,180);
+        const dy = random(-250,-80);
+        const dur = random(1000,1700);
+        el.animate([
+          { transform:`translate(0px,0px) scale(${random(.7,1.2)}) rotate(0deg)`, opacity:0.98 },
+          { transform:`translate(${dx}px, ${dy}px) scale(${random(.5,1)}) rotate(${random(-360,360)}deg)`, opacity:0.02 }
+        ], { duration:dur, easing:'cubic-bezier(.15,.9,.25,1)', fill:'forwards' });
+        setTimeout(()=> el.remove(), dur + 100);
+      }
+      setTimeout(()=> container.remove(), 2000);
+    }
+
+    const typingPreview = $('typingPreview');
+    const message = $('message');
+    const messageTyping = $('messageTyping');
+    const startBtn = $('startBtn');
+    const replayBtn = $('replayBtn');
+    const speedRange = $('speedRange');
+    const speedLabel = $('speedLabel');
+    const closeBtn = $('closeBtn');
+    const viewPhotosBtn = $('viewPhotosBtn');
+    const redirectSecondsEl = $('redirectSeconds');
+    const autoRedirectMsg = $('autoRedirectMsg');
+    const cancelRedirectBtn = $('cancelRedirect');
+
+    let typingSpeed = Number(speedRange.value) || 55;
+    let isTyping = false;
+    let abortFlag = false;
+
+    speedRange.addEventListener('input', () => {
+      typingSpeed = Number(speedRange.value);
+      speedLabel.textContent = typingSpeed + 'ms';
+    });
+
+    function wait(ms){ return new Promise(res => setTimeout(res, ms)); }
+
+    async function typeIntoContainer(container, text, baseSpeed){
+      for(let i=0;i<text.length;i++){
+        if(abortFlag) return;
+        const ch = text[i];
+        if(ch === '\n'){
+          container.appendChild(document.createElement('br'));
+          await wait(200 + Math.random()*280);
+          continue;
+        }
+        container.appendChild(document.createTextNode(ch));
+        const jitter = Math.random()*baseSpeed*0.22;
+        await wait(baseSpeed + jitter);
+      }
+    }
+
+    async function runTypingPreview(){
+      abortFlag = false;
+      typingPreview.innerHTML = '';
+      for(let i=0;i<messages.length;i++){
+        if(abortFlag) break;
+        const block = document.createElement('div');
+        block.style.marginBottom = '8px';
+        await typeIntoContainer(block, messages[i], typingSpeed);
+        typingPreview.appendChild(block);
+        await wait(500 + Math.random()*600);
+      }
+    }
+
+    let slideshowTimeout = null;
+    let countdownInterval = null;
+    function scheduleSlideshow(delay = 5000){
+      clearSlideshowSchedule();
+      let secondsLeft = Math.ceil(delay/1000);
+      redirectSecondsEl.textContent = secondsLeft;
+      autoRedirectMsg.style.display = 'block';
+      countdownInterval = setInterval(()=> {
+        secondsLeft -= 1;
+        redirectSecondsEl.textContent = secondsLeft;
+      }, 1000);
+      slideshowTimeout = setTimeout(()=> {
+        showSlideshow();
+      }, delay);
+    }
+    function clearSlideshowSchedule(){
+      if(slideshowTimeout){ clearTimeout(slideshowTimeout); slideshowTimeout = null; }
+      if(countdownInterval){ clearInterval(countdownInterval); countdownInterval = null; }
+      autoRedirectMsg.style.display = 'none';
+    }
+    function cancelSlideshow(){ clearSlideshowSchedule(); }
+
+    async function showMessageWithTyping(){
+      const ok = await tryPlayMusic();
+      if(!ok) showMusicOverlay('Bấm để bật nhạc');
+
+      if(isTyping) return;
+      isTyping = true;
+      abortFlag = false;
+      message.setAttribute('aria-hidden','false'); 
+      message.classList.add('active');
+      messageTyping.innerHTML = '';
+      clearSlideshowSchedule();
+      await wait(300);
+      for(let i=0;i<messages.length;i++){
+        if(abortFlag) break;
+        await typeIntoContainer(messageTyping, messages[i], typingSpeed);
+        messageTyping.appendChild(document.createElement('br'));
+        messageTyping.appendChild(document.createElement('br'));
+        await wait(500 + Math.random()*700);
+      }
+      isTyping = false;
+      scheduleSlideshow(10000);
+    }
+
+    function hideMessage(){ 
+      message.classList.remove('active'); 
+      message.setAttribute('aria-hidden','true'); 
+      abortFlag = true; 
+      cancelSlideshow(); 
+    }
+
+    startBtn.addEventListener('click', ()=> { treeClickHandler(); });
+    replayBtn.addEventListener('click', ()=> {
+      runConfettiBurst(innerWidth/2, innerHeight/3, 110);
+      spawnPetal(18);
+      if(toggleLanternEl.checked) spawnLantern();
+      spawnFloatingHearts(28, { cx: innerWidth/2, cy: innerHeight/2 });
+      showMessageWithTyping();
+      ensureMusicPlayOnUserGesture();
+    });
+    closeBtn.addEventListener('click', hideMessage);
+    viewPhotosBtn.addEventListener('click', ()=> { cancelSlideshow(); showSlideshow(); });
+    cancelRedirectBtn.addEventListener('click', cancelSlideshow);
+    message.addEventListener('click', (e)=> { if(e.target === message) hideMessage(); });
+
+    async function treeClickHandler(){
+      const ok = await tryPlayMusic();
+      if(!ok) showMusicOverlay('Bấm vào đây để bật nhạc');
+
+      treeArea.style.pointerEvents = 'none';
+      const leafEls = Array.from(leavesContainer.querySelectorAll('.leaf'));
+      leafEls.forEach((el, idx)=>{
+        setTimeout(()=> makeLeafFall(el), idx * random(25,90));
+      });
+      const rect = treeArea.getBoundingClientRect();
+      const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+      runConfettiBurst(cx, cy, 160);
+      spawnPetal(28);
+      spawnFirework(cx, cy - 60, undefined, 44);
+      if(toggleLanternEl.checked) spawnLantern();
+      spawnFloatingHearts(42, { cx: cx, cy: cy });
+      showMessageWithTyping();
+      setTimeout(()=> { createLeaves(46); treeArea.style.pointerEvents = 'auto'; }, 5000);
+    }
+
+ // Slideshow logic - Updated for infinite loop including thank you
+const slideshowRoot = $('slideshowRoot');
+const slideshowEl = $('slideshow');
+const slides = Array.from(slideshowRoot.querySelectorAll('.slide'));
+const slCountEl = $('slCount');
+const slPrevBtn = $('slPrevBtn');
+const slNextBtn = $('slNextBtn');
+const slBackBtn = $('slBackBtn');
+const slPlayPauseBtn = $('slPlayPauseBtn');
+const slFirstBtn = $('slFirstBtn');
+const slLastBtn = $('slLastBtn');
+const slProgress = $('slProgress');
+const thankYouBackBtn = $('thankYouBackBtn'); // Nút quay lại từ thank you (nếu cần manual close)
+
+let slIdx = 0;
+const TOTAL_SLIDES = 16; // Tổng slides: 4 ảnh + 1 thank you
+const SLIDE_DURATION = 7000; // Duration cho mỗi slide (bao gồm thank you)
+
+let slAutoId = null;
+let slPlaying = true;
+
+function slUpdate() {
+  slides.forEach((s, i) => {
+    s.classList.toggle('active', i === slIdx);
+  });
+  slCountEl.textContent = `${slIdx + 1} / ${TOTAL_SLIDES}`;
+  
+  // Không disable nav nữa, vì loop vô hạn
+  slPrevBtn.disabled = false;
+  slNextBtn.disabled = false;
+  slLastBtn.disabled = false;
+  
+  // Progress chạy cho mọi slide
+  resetProgress();
+  if (slPlaying) startProgressLoop();
+  
+  // Trigger effects khi vào thank you (slide 4, index 4)
+  if (slIdx === TOTAL_SLIDES - 1) { // Slide thank you
+    const rect = slideshowEl.getBoundingClientRect();
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    runConfettiBurst(cx, cy, 40); // Confetti nhẹ khi vào thank you
+    spawnFloatingHearts(10, { cx, cy }); // Hearts nhẹ
+  }
+}
+
+function slNext() {
+  slIdx = (slIdx + 1) % TOTAL_SLIDES; // Loop vô hạn: 0→1→2→3→4→0→...
+  slUpdate();
+}
+
+function slPrev() {
+  slIdx = (slIdx - 1 + TOTAL_SLIDES) % TOTAL_SLIDES; // Loop ngược: 0→4→3→...
+  slUpdate();
+}
+
+slPrevBtn.addEventListener('click', () => { slPrev(); slPauseAuto(); });
+slNextBtn.addEventListener('click', () => { slNext(); slPauseAuto(); });
+slBackBtn.addEventListener('click', () => { hideSlideshow(); });
+
+// First: Về slide 1 (ảnh đầu), Last: Đến thank you (slide 5)
+if (slFirstBtn) slFirstBtn.addEventListener('click', () => { slIdx = 0; slUpdate(); slPauseAuto(); });
+if (slLastBtn) slLastBtn.addEventListener('click', () => { slIdx = TOTAL_SLIDES - 1; slUpdate(); slPauseAuto(); });
+
+// Play/Pause - Hoạt động trên tất cả slides
+function slStartAuto() { 
+  slStopAuto(); 
+  slAutoId = setInterval(slNext, SLIDE_DURATION); 
+  slPlaying = true; 
+  slPlayPauseBtn.textContent = 'Tạm dừng'; 
+  slideshowEl.classList.add('playing'); 
+  resetProgress(); 
+  startProgressLoop(); 
+}
+
+function slStopAuto() { 
+  if (slAutoId) clearInterval(slAutoId); 
+  slAutoId = null; 
+  slPlaying = false; 
+  slPlayPauseBtn.textContent = 'Phát'; 
+  slideshowEl.classList.remove('playing'); 
+  stopProgressLoop(); 
+  slProgress.style.width = '0%'; 
+}
+
+function slPauseAuto() { slStopAuto(); }
+
+slPlayPauseBtn.addEventListener('click', () => { 
+  if (slPlaying) slStopAuto(); 
+  else slStartAuto(); 
+});
+
+// Progress functions (chạy cho mọi slide, loop reset khi về đầu)
+let progressTimer = null;
+function resetProgress() {
+  if (!slProgress) return;
+  slProgress.style.transition = 'none';
+  slProgress.style.width = '0%';
+  void slProgress.offsetWidth;
+  slProgress.style.transition = `width ${SLIDE_DURATION}ms linear`;
+  if (slPlaying) slProgress.style.width = '100%';
+}
+
+function startProgressLoop() {
+  resetProgress();
+  stopProgressLoop();
+  progressTimer = setInterval(() => {
+    resetProgress();
+  }, SLIDE_DURATION);
+}
+
+function stopProgressLoop() {
+  if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+}
+
+// Nút quay lại từ thank you (manual close nếu cần, nhưng vì loop nên optional)
+if (thankYouBackBtn) {
+  thankYouBackBtn.addEventListener('click', () => {
+    hideSlideshow();
+  });
+}
+
+// Touch events (swipe loop)
+let touchStartX = null;
+slideshowRoot.addEventListener('touchstart', (ev) => {
+  if (!ev.touches || ev.touches.length === 0) return;
+  touchStartX = ev.touches[0].clientX;
+}, { passive: true });
+
+slideshowRoot.addEventListener('touchend', (ev) => {
+  if (touchStartX == null) return;
+  const x = ev.changedTouches && ev.changedTouches[0] ? ev.changedTouches[0].clientX : null;
+  if (x == null) { touchStartX = null; return; }
+  const diff = x - touchStartX;
+  if (Math.abs(diff) > 40) {
+    if (diff < 0) { slNext(); slPauseAuto(); } else { slPrev(); slPauseAuto(); }
+  }
+  touchStartX = null;
+});
+
+// Keyboard (loop, hoạt động trên tất cả)
+document.addEventListener('keydown', (e) => {
+  if (slideshowRoot.classList.contains('active')) {
+    if (e.key === 'ArrowRight') { slNext(); slPauseAuto(); }
+    if (e.key === 'ArrowLeft') { slPrev(); slPauseAuto(); }
+    if (e.key === ' ') { 
+      e.preventDefault(); 
+      if (slPlaying) slStopAuto(); 
+      else slStartAuto(); 
+    }
+    if (e.key === 'Escape') { hideSlideshow(); }
+  } else {
+    const activeTag = document.activeElement && document.activeElement.tagName;
+    if (e.key === ' ' && activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && activeTag !== 'BUTTON' && activeTag !== 'SELECT' && activeTag !== 'A') { 
+      e.preventDefault(); 
+      treeClickHandler(); 
+    }
+  }
+});
+
+function showSlideshow() {
+  slideshowRoot.classList.add('active'); 
+  slideshowRoot.setAttribute('aria-hidden', 'false');
+  slIdx = 0; 
+  slUpdate(); 
+  slStartAuto(); // Bắt đầu auto loop từ slide 1
+}
+
+function hideSlideshow() {
+  slStopAuto();
+  slideshowRoot.classList.remove('active'); 
+  slideshowRoot.setAttribute('aria-hidden', 'true');
+  startBtn.focus(); // Focus về nút bắt đầu
+}
+
+// ... (phần còn lại của JS giữ nguyên, như createLeaves, ambientInterval, etc.)
+// ... (phần còn lại của JS giữ nguyên, như createLeaves, etc.)
+    createLeaves(46);
+
+    let ambientInterval = setInterval(()=> {
+      if(prefersReducedMotion) return;
+      if(Math.random() < 0.35){
+        const x = random(innerWidth*0.15, innerWidth*0.85);
+        const y = random(innerHeight*0.05, innerHeight*0.45);
+        spawnFirework(x,y, undefined, Math.floor(random(18,44)));
+        runConfettiBurst(x, y, Math.floor(random(22,70)));
+      }
+      if(!prefersReducedMotion && toggleHeartsEl && toggleHeartsEl.checked && Math.random() < 0.30) {
+        spawnFloatingHearts(Math.floor(random(3,10)));
+      }
+    }, 3800);
+
+    onResizeDebounced();
+    startBtn.focus();
+
+    document.addEventListener('visibilitychange', () => {
+      if(document.hidden){
+        if(!bgAudio.paused) bgAudio.pause();
+      }
+    });
+
+    window.addEventListener('beforeunload', () => {
+      if(lanternInterval) clearInterval(lanternInterval);
+      if(petalInterval) clearInterval(petalInterval);
+      if(ambientInterval) clearInterval(ambientInterval);
+      if(resizeTimeout) clearTimeout(resizeTimeout);
+      if(slideshowTimeout) clearTimeout(slideshowTimeout);
+      if(countdownInterval) clearInterval(countdownInterval);
+      if(progressTimer) clearInterval(progressTimer);
+    });
+
+    (function attachCardEffects(){
+      const cardEl = $('card');
+      if(!cardEl) return;
+      function onCardActivate(clientX, clientY){
+        let x = clientX, y = clientY;
+        if(x == null || y == null){
+          const r = cardEl.getBoundingClientRect();
+          x = r.left + r.width/2;
+          y = r.top + r.height/2;
+        }
+        spawnFloatingHearts(20, { cx: x, cy: y });
+        createMiniHearts(x, y, 14);
+        runConfettiBurst(x, y, 44);
+        spawnFirework(x, y - 30, undefined, 34);
+        //  Added sparkles when clicking card
+        for(let i = 0; i < 12; i++) {
+          setTimeout(() => createSparkle(x + random(-60, 60), y + random(-60, 60)), i * 60);
+        }
+        ensureMusicPlayOnUserGesture();
+      }
+
+      cardEl.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        onCardActivate(ev.clientX, ev.clientY);
+      });
+
+      cardEl.addEventListener('keydown', (ev) => {
+        if(ev.key === 'Enter' || ev.key === ' '){
+          ev.preventDefault();
+          onCardActivate();
+        }
+      });
+
+      cardEl.addEventListener('touchstart', (ev) => {
+        if(!ev.touches || ev.touches.length === 0) return;
+        const t = ev.touches[0];
+        spawnFloatingHearts(10, { cx: t.clientX, cy: t.clientY });
+      }, {passive:true});
+    })();
+
+    window.__wedding = {
+      tryPlayMusic, ensureMusicPlayOnUserGesture, showMusicOverlay, removeMusicOverlay, showSlideshow, hideSlideshow,
+      spawnFloatingHeart, spawnFloatingHearts
+    };
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
